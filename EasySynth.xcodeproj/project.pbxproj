@@ -10,6 +10,19 @@
 		3F8646FA1DE238560088BD47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8646F91DE238560088BD47 /* AppDelegate.swift */; };
 		3F8646FC1DE238560088BD47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F8646FB1DE238560088BD47 /* Assets.xcassets */; };
 		3F8646FF1DE238560088BD47 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F8646FD1DE238560088BD47 /* MainMenu.xib */; };
+		3F86488A1DE238BF0088BD47 /* ftdi.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F86474D1DE238BF0088BD47 /* ftdi.c */; };
+		3F8648BB1DE238BF0088BD47 /* core.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F86478F1DE238BF0088BD47 /* core.c */; };
+		3F8648BC1DE238BF0088BD47 /* descriptor.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F8647901DE238BF0088BD47 /* descriptor.c */; };
+		3F8648BD1DE238BF0088BD47 /* hotplug.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F8647911DE238BF0088BD47 /* hotplug.c */; };
+		3F8648BE1DE238BF0088BD47 /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F8647931DE238BF0088BD47 /* io.c */; };
+		3F8648C11DE238BF0088BD47 /* darwin_usb.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F8647991DE238BF0088BD47 /* darwin_usb.c */; };
+		3F8648DB1DE238BF0088BD47 /* poll_posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F8647B91DE238BF0088BD47 /* poll_posix.c */; };
+		3F8648DD1DE238BF0088BD47 /* threads_posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F8647BD1DE238BF0088BD47 /* threads_posix.c */; };
+		3F8648E11DE238BF0088BD47 /* strerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F8647C61DE238BF0088BD47 /* strerror.c */; };
+		3F8648E21DE238BF0088BD47 /* sync.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F8647C71DE238BF0088BD47 /* sync.c */; };
+		3F86494C1DE238BF0088BD47 /* core.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F8648401DE238BF0088BD47 /* core.c */; };
+		3F86496A1DE2396E0088BD47 /* USBTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8649691DE2396E0088BD47 /* USBTransfer.swift */; };
+		3F8649731DE23A100088BD47 /* MidiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F8649701DE23A100088BD47 /* MidiClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +31,34 @@
 		3F8646FB1DE238560088BD47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F8646FE1DE238560088BD47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3F8647001DE238560088BD47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F86474D1DE238BF0088BD47 /* ftdi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ftdi.c; sourceTree = "<group>"; };
+		3F86474E1DE238BF0088BD47 /* ftdi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftdi.h; sourceTree = "<group>"; };
+		3F86478E1DE238BF0088BD47 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		3F86478F1DE238BF0088BD47 /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = core.c; sourceTree = "<group>"; };
+		3F8647901DE238BF0088BD47 /* descriptor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = descriptor.c; sourceTree = "<group>"; };
+		3F8647911DE238BF0088BD47 /* hotplug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hotplug.c; sourceTree = "<group>"; };
+		3F8647921DE238BF0088BD47 /* hotplug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hotplug.h; sourceTree = "<group>"; };
+		3F8647931DE238BF0088BD47 /* io.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = io.c; sourceTree = "<group>"; };
+		3F8647961DE238BF0088BD47 /* libusb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libusb.h; sourceTree = "<group>"; };
+		3F8647971DE238BF0088BD47 /* libusbi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libusbi.h; sourceTree = "<group>"; };
+		3F8647991DE238BF0088BD47 /* darwin_usb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = darwin_usb.c; sourceTree = "<group>"; };
+		3F86479A1DE238BF0088BD47 /* darwin_usb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = darwin_usb.h; sourceTree = "<group>"; };
+		3F8647B91DE238BF0088BD47 /* poll_posix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = poll_posix.c; sourceTree = "<group>"; };
+		3F8647BA1DE238BF0088BD47 /* poll_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poll_posix.h; sourceTree = "<group>"; };
+		3F8647BD1DE238BF0088BD47 /* threads_posix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = threads_posix.c; sourceTree = "<group>"; };
+		3F8647BE1DE238BF0088BD47 /* threads_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threads_posix.h; sourceTree = "<group>"; };
+		3F8647C61DE238BF0088BD47 /* strerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = strerror.c; sourceTree = "<group>"; };
+		3F8647C71DE238BF0088BD47 /* sync.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sync.c; sourceTree = "<group>"; };
+		3F8647C81DE238BF0088BD47 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
+		3F8647C91DE238BF0088BD47 /* version_nano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version_nano.h; sourceTree = "<group>"; };
+		3F86483F1DE238BF0088BD47 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		3F8648401DE238BF0088BD47 /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = core.c; sourceTree = "<group>"; };
+		3F8648411DE238BF0088BD47 /* usb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usb.h; sourceTree = "<group>"; };
+		3F8648421DE238BF0088BD47 /* usbi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usbi.h; sourceTree = "<group>"; };
+		3F8649691DE2396E0088BD47 /* USBTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = USBTransfer.swift; sourceTree = "<group>"; };
+		3F86496E1DE239A70088BD47 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
+		3F8649701DE23A100088BD47 /* MidiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MidiClient.m; sourceTree = "<group>"; };
+		3F8649711DE23A100088BD47 /* MidiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiClient.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				3F8646F81DE238560088BD47 /* EasySynth */,
+				3F8647061DE238BF0088BD47 /* Dependencies */,
 				3F8646F71DE238560088BD47 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,12 +92,103 @@
 		3F8646F81DE238560088BD47 /* EasySynth */ = {
 			isa = PBXGroup;
 			children = (
+				3F86496E1DE239A70088BD47 /* BridgingHeader.h */,
+				3F8649691DE2396E0088BD47 /* USBTransfer.swift */,
 				3F8646F91DE238560088BD47 /* AppDelegate.swift */,
+				3F8649701DE23A100088BD47 /* MidiClient.m */,
+				3F8649711DE23A100088BD47 /* MidiClient.h */,
 				3F8646FB1DE238560088BD47 /* Assets.xcassets */,
 				3F8646FD1DE238560088BD47 /* MainMenu.xib */,
 				3F8647001DE238560088BD47 /* Info.plist */,
 			);
 			path = EasySynth;
+			sourceTree = "<group>";
+		};
+		3F8647061DE238BF0088BD47 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				3F8647071DE238BF0088BD47 /* libftdi-0.20 */,
+				3F86474F1DE238BF0088BD47 /* libusb-1.0.20 */,
+				3F8648241DE238BF0088BD47 /* libusb-compat-0.1.5 */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		3F8647071DE238BF0088BD47 /* libftdi-0.20 */ = {
+			isa = PBXGroup;
+			children = (
+				3F8647491DE238BF0088BD47 /* src */,
+			);
+			path = "libftdi-0.20";
+			sourceTree = "<group>";
+		};
+		3F8647491DE238BF0088BD47 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3F86474D1DE238BF0088BD47 /* ftdi.c */,
+				3F86474E1DE238BF0088BD47 /* ftdi.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		3F86474F1DE238BF0088BD47 /* libusb-1.0.20 */ = {
+			isa = PBXGroup;
+			children = (
+				3F86478B1DE238BF0088BD47 /* libusb */,
+			);
+			path = "libusb-1.0.20";
+			sourceTree = "<group>";
+		};
+		3F86478B1DE238BF0088BD47 /* libusb */ = {
+			isa = PBXGroup;
+			children = (
+				3F86478E1DE238BF0088BD47 /* config.h */,
+				3F86478F1DE238BF0088BD47 /* core.c */,
+				3F8647901DE238BF0088BD47 /* descriptor.c */,
+				3F8647911DE238BF0088BD47 /* hotplug.c */,
+				3F8647921DE238BF0088BD47 /* hotplug.h */,
+				3F8647931DE238BF0088BD47 /* io.c */,
+				3F8647961DE238BF0088BD47 /* libusb.h */,
+				3F8647971DE238BF0088BD47 /* libusbi.h */,
+				3F8647981DE238BF0088BD47 /* os */,
+				3F8647C61DE238BF0088BD47 /* strerror.c */,
+				3F8647C71DE238BF0088BD47 /* sync.c */,
+				3F8647C81DE238BF0088BD47 /* version.h */,
+				3F8647C91DE238BF0088BD47 /* version_nano.h */,
+			);
+			path = libusb;
+			sourceTree = "<group>";
+		};
+		3F8647981DE238BF0088BD47 /* os */ = {
+			isa = PBXGroup;
+			children = (
+				3F8647991DE238BF0088BD47 /* darwin_usb.c */,
+				3F86479A1DE238BF0088BD47 /* darwin_usb.h */,
+				3F8647B91DE238BF0088BD47 /* poll_posix.c */,
+				3F8647BA1DE238BF0088BD47 /* poll_posix.h */,
+				3F8647BD1DE238BF0088BD47 /* threads_posix.c */,
+				3F8647BE1DE238BF0088BD47 /* threads_posix.h */,
+			);
+			path = os;
+			sourceTree = "<group>";
+		};
+		3F8648241DE238BF0088BD47 /* libusb-compat-0.1.5 */ = {
+			isa = PBXGroup;
+			children = (
+				3F86483C1DE238BF0088BD47 /* libusb */,
+			);
+			path = "libusb-compat-0.1.5";
+			sourceTree = "<group>";
+		};
+		3F86483C1DE238BF0088BD47 /* libusb */ = {
+			isa = PBXGroup;
+			children = (
+				3F86483F1DE238BF0088BD47 /* config.h */,
+				3F8648401DE238BF0088BD47 /* core.c */,
+				3F8648411DE238BF0088BD47 /* usb.h */,
+				3F8648421DE238BF0088BD47 /* usbi.h */,
+			);
+			path = libusb;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,7 +262,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F86488A1DE238BF0088BD47 /* ftdi.c in Sources */,
+				3F8648DD1DE238BF0088BD47 /* threads_posix.c in Sources */,
+				3F8648BC1DE238BF0088BD47 /* descriptor.c in Sources */,
+				3F8648BB1DE238BF0088BD47 /* core.c in Sources */,
+				3F8648E11DE238BF0088BD47 /* strerror.c in Sources */,
+				3F8648C11DE238BF0088BD47 /* darwin_usb.c in Sources */,
+				3F8648DB1DE238BF0088BD47 /* poll_posix.c in Sources */,
+				3F8648E21DE238BF0088BD47 /* sync.c in Sources */,
 				3F8646FA1DE238560088BD47 /* AppDelegate.swift in Sources */,
+				3F86494C1DE238BF0088BD47 /* core.c in Sources */,
+				3F86496A1DE2396E0088BD47 /* USBTransfer.swift in Sources */,
+				3F8648BD1DE238BF0088BD47 /* hotplug.c in Sources */,
+				3F8649731DE23A100088BD47 /* MidiClient.m in Sources */,
+				3F8648BE1DE238BF0088BD47 /* io.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,12 +386,14 @@
 		3F8647041DE238560088BD47 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = EasySynth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = name.malara.antonio.EasySynth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = EasySynth/BridgingHeader.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -253,12 +401,14 @@
 		3F8647051DE238560088BD47 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = EasySynth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = name.malara.antonio.EasySynth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = EasySynth/BridgingHeader.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
