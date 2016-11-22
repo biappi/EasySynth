@@ -30,48 +30,96 @@ let frequenciesHigh : [UInt8] = [
     0x8b, 0x93, 0x9c, 0xa5, 0xaf, 0xb9, 0xc4, 0xd0, 0xdd, 0xea, 0xf8, 0xff,
 ]
 
-func poke(lo: UInt8, hi: UInt8, byte: UInt8) -> [UInt8] {
-    return [lo, hi, byte]
-}
-
-func poke(_ addr: UInt16, _ byte: UInt8) -> [UInt8] {
-    return poke(lo:   UInt8( addr & 0x00ff      ),
-                hi:   UInt8((addr & 0xff00) >> 8),
-                byte: byte)
+struct Poke {
+    let address: UInt16
+    let byte:    UInt8
+    
+    init (_ address: UInt16, _ byte: UInt8) {
+        self.address = address
+        self.byte    = byte
+    }
+    
+    func toCommand() -> [UInt8] {
+        return [UInt8( address & 0x00ff      ),
+                UInt8((address & 0xff00) >> 8),
+                byte]
+    }
 }
 
 let SID : UInt16 = 0xd400
 let sidInit = [
-    poke(SID + 24, 0x0f), // volume
-    poke(SID +  1, 0x20), // freq
-    poke(SID +  5, 0x08), // AD
-    poke(SID +  6, 0x00), // SR
-    poke(SID +  4, 0x00), // * DING *
-    poke(SID +  4, 0x11), // * DING *
-    poke(0xd020, 14)
+    Poke(SID + 24, 0x0f), // volume
+    Poke(SID +  1, 0x20), // freq
+    Poke(SID +  5, 0x08), // AD
+    Poke(SID +  6, 0x00), // SR
+    Poke(SID +  4, 0x00), // * DING *
+    Poke(SID +  4, 0x11), // * DING *
 ]
 
+struct SidVoice {
+    var tri:   Bool   =   true
+    var saw:   Bool   =  false
+    var pulse: Bool   =  false
+    var noise: Bool   =  false
 
-func noteOn(note: Int, ad: UInt8, sr: UInt8) -> [UInt8] {
-    return [
-        poke(SID + 0, frequenciesLow[note]),
-        poke(SID + 1, frequenciesHigh[note]),
-        poke(SID + 5, ad), // AD
-        poke(SID + 6, sr), // SR
-
-        // poke(SID + 4, 0x00),
-        poke(SID + 4, 0x11),
-    ].flatMap { $0 }
+    var a:     UInt8  =   0x00
+    var d:     UInt8  =   0x0f
+    var s:     UInt8  =   0x00
+    var r:     UInt8  =   0x00
+    var width: UInt16 = 0x0800
+    
+    var ad:    UInt8  { return (self.a << 4) | self.d }
+    var sr:    UInt8  { return (self.s << 4) | self.r }
+    
+    var ctrl:  UInt8  { return (self.noise ? 0b10000000 : 0) |
+                               (self.pulse ? 0b01000000 : 0) |
+                               (self.saw   ? 0b00100000 : 0) |
+                               (self.tri   ? 0b00010000 : 0) }
+    
+    var pulseLo: UInt8 { return UInt8( self.width       & 0xff) }
+    var pulseHi: UInt8 { return UInt8((self.width >> 8) & 0xff) }
 }
 
-let noteOff = poke(SID + 4, 0)
+
+func noteOn(note: Int, voice: SidVoice) -> [Poke] {
+    return [
+        Poke(SID + 0, frequenciesLow  [note]),
+        Poke(SID + 1, frequenciesHigh [note]),
+        Poke(SID + 2, voice.pulseLo),
+        Poke(SID + 3, voice.pulseHi),
+
+        Poke(SID + 5, voice.ad),
+        Poke(SID + 6, voice.sr),
+        //Poke(SID + 4, voice.ctrl + 0x00),
+        Poke(SID + 4, voice.ctrl + 0x01),
+    ]
+}
+
+func noteOff(voice: SidVoice) -> [Poke] {
+    return [Poke(SID + 4, voice.ctrl + 0x00)]
+}
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, MidiClientDelegate {
-    @IBOutlet weak var window: NSWindow!
-
+    @IBOutlet weak var window:   NSWindow!
+    
+    @IBOutlet weak var triangle: NSButton!
+    @IBOutlet weak var saw:      NSButton!
+    @IBOutlet weak var pulse:    NSButton!
+    @IBOutlet weak var noise:    NSButton!
+    
+    @IBOutlet weak var a:        NSSlider!
+    @IBOutlet weak var d:        NSSlider!
+    @IBOutlet weak var s:        NSSlider!
+    @IBOutlet weak var r:        NSSlider!
+    @IBOutlet weak var w:        NSSlider!
+    
     let midi = MidiClient(name: "C64")!
     let f = FTDIContext(vendor: 0x0403, product: 0x8738)
+    
+    var voice = SidVoice()
+    var currentNote: Int?
+
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         midi.createClient()
@@ -79,7 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, MidiClientDelegate {
         
         do {
             try f.open()
-            try f.write(Array(sidInit.flatten()))
+            try f.write(sidInit.flatMap { $0.toCommand() })
         }
         catch {
             print("ERROR > \(error)")
@@ -90,12 +138,54 @@ class AppDelegate: NSObject, NSApplicationDelegate, MidiClientDelegate {
         // Insert code here to tear down your application
     }
     
-    var notes = 0
-    var A = 0
-    var D = 8
-    var S = 0
-    var R = 0
+    override func awakeFromNib() {
+        setUi(voice: voice)
+    }
     
+    func setUi(voice: SidVoice) {
+        a.integerValue = Int(voice.a)
+        d.integerValue = Int(voice.d)
+        s.integerValue = Int(voice.s)
+        r.integerValue = Int(voice.r)
+        w.integerValue = Int(voice.width)
+        
+        triangle.intValue = voice.tri   ? 1 : 0
+        saw.intValue      = voice.saw   ? 1 : 0
+        pulse.intValue    = voice.pulse ? 1 : 0
+        noise.intValue    = voice.noise ? 1 : 0
+    }
+    
+    @IBAction func test(_ sender: AnyObject) {
+        let pokes = noteOn(note: frequenciesLow.count / 2 , voice: voice)
+        print("\(pokes)")
+        
+        let bytes = pokes.flatMap { $0.toCommand() }
+        print("\(bytes)")
+        
+        try? f.write(bytes)
+        //print("\(voice)\n\(x)")
+    }
+    
+    @IBAction func valueChanged(_ sender: AnyObject) {
+        guard let theSender = sender as? NSControl else { return }
+        
+        let nibble  = { (control: NSControl) in UInt8 (control.integerValue &   0x0f) }
+        let twelve  = { (control: NSControl) in UInt16(control.integerValue & 0x0fff) }
+        let boolean = { (control: NSControl) in control.integerValue != 0 }
+        
+        if theSender == a { voice.a     = nibble(theSender) }
+        if theSender == d { voice.d     = nibble(theSender) }
+        if theSender == s { voice.s     = nibble(theSender) }
+        if theSender == r { voice.r     = nibble(theSender) }
+        
+        if theSender == w { voice.width = twelve(theSender) }
+        
+        if theSender == triangle { voice.tri   = boolean(theSender) }
+        if theSender == saw      { voice.saw   = boolean(theSender) }
+        if theSender == pulse    { voice.pulse = boolean(theSender) }
+        if theSender == noise    { voice.noise = boolean(theSender) }
+    }
+
     func gotMidiPacket(_ midi: Data!) {
         let midiData = midi.toBytes()
         
@@ -103,10 +193,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, MidiClientDelegate {
             do {
                 let newNote = Int(midiData[1]) - 24
                 if newNote >= 0 && newNote < (8 * 12) {
-                    let ad = UInt8((A << 4) | D)
-                    let sr = UInt8((S << 4) | R)
-                    try f.write(noteOn(note: newNote, ad: ad, sr: sr))
-                    notes += 1
+                    try f.write(noteOn(note: newNote, voice: voice).flatMap { $0.toCommand() })
+                    currentNote = newNote
                 }
             }
             catch {
@@ -117,34 +205,37 @@ class AppDelegate: NSObject, NSApplicationDelegate, MidiClientDelegate {
         else if midiData.count == 3 && midiData[0] == 0x80 {
             do {
                 let newNote = Int(midiData[1]) - 24
-                if newNote >= 0 && newNote < (8 * 12) {
-                    notes -= 1
-                    if notes == 0 {
-                        try f.write(noteOff)
+                if let currentNote = currentNote, newNote >= 0 && newNote < (8 * 12) {
+                    if currentNote == newNote {
+                        try f.write(noteOff(voice: voice).flatMap { $0.toCommand() })
                     }
                 }
             }
             catch {
                 print("ERROR > \(error)")
             }
-            
         }
         
         else if midiData.count == 3 && midiData[0] == 176 {
-            let toNibble = { (x : UInt8) in Int((Double(x) / 127.0) * 15) }
+            let toNibble = { (x : UInt8) in UInt8 ((Double(x) / 127.0) *   0x0f) }
+            let toTwelve = { (x : UInt8) in UInt16((Double(x) / 127.0) * 0x0fff) }
             
             if midiData[1] == 59 {
-                A = toNibble(midiData[2])
+                voice.a = toNibble(midiData[2])
             }
             else if midiData[1] == 60 {
-                D = toNibble(midiData[2])
+                voice.d = toNibble(midiData[2])
             }
             else if midiData[1] == 61 {
-                S = toNibble(midiData[2])
+                voice.s = toNibble(midiData[2])
             }
             else if midiData[1] == 63 {
-                R = toNibble(midiData[2])
+                voice.r = toNibble(midiData[2])
             }
+            else if midiData[1] == 37 {
+                voice.width = toTwelve(midiData[2])
+            }
+
             else {
                 print (midiData[1])
             }
@@ -153,5 +244,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, MidiClientDelegate {
         else {
             print (midiData)
         }
+        
+        DispatchQueue.main.async {
+            self.setUi(voice: self.voice)
+        }
+        
     }
 }
