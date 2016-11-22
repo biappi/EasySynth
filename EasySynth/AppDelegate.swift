@@ -189,7 +189,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, MidiClientDelegate {
     func gotMidiPacket(_ midi: Data!) {
         let midiData = midi.toBytes()
         
-        if midiData.count == 3 && midiData[0] == 0x90 {
+        if midiData.count == 3 && (midiData[0] == 0x90 && midiData[2] != 0) {
             do {
                 let newNote = Int(midiData[1]) - 24
                 if newNote >= 0 && newNote < (8 * 12) {
@@ -202,7 +202,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, MidiClientDelegate {
             }
         }
         
-        else if midiData.count == 3 && midiData[0] == 0x80 {
+        else if midiData.count == 3 && (midiData[0] == 0x80 || (midiData[0] == 0x90 && midiData[2] == 0)) {
             do {
                 let newNote = Int(midiData[1]) - 24
                 if let currentNote = currentNote, newNote >= 0 && newNote < (8 * 12) {
